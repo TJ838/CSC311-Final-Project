@@ -115,7 +115,7 @@ def train(model, lr, lamb, train_data, zero_train_data, valid_data, num_epoch):
             optimizer.zero_grad()
             output = model(inputs)
 
-            nan_mask = np.isnan(train_data[user_id].unsqueeze(0).numpy())
+            nan_mask = torch.isnan(train_data[user_id].unsqueeze(0))
             target[nan_mask] = output[nan_mask]
 
             loss = torch.sum((output - target) ** 2.0)
