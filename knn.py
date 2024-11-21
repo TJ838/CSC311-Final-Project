@@ -48,6 +48,9 @@ def knn_impute_by_item(matrix, valid_data, k):
     nbrs = KNNImputer(n_neighbors=k)
     # sparse_matrix is row = user, column = question, so
     # transpose the matrix for item/question-based similarity.
+
+    # transpose again at the end to get back to row = user, column = question
+    # which is required for sparse_matrix_evaluate to work correctly
     mat = nbrs.fit_transform(matrix.T).T
     acc = sparse_matrix_evaluate(valid_data, mat)
     print("Validation Accuracy (Item-based, k={}): {}".format(k, acc))
